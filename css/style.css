@@ -109,4 +109,5 @@ h6 {
 
 .shadow {
   box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.8);
+  transition: all 0.2s;
 }

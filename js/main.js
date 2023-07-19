@@ -1,37 +1,36 @@
-const btns = document.querySelectorAll('.btn');
+const buttonCount = 5;
+const timeout = 5000;
+const shadow = 'shadow'
 
-const toggleShadow = (button) => {
-   return new Promise((resolve) => {
-      button.classList.toggle('shadow');
-      resolve();
-   });
-};
+for (let i = 1; i <= buttonCount; i++) {
+   const btnElem = document.createElement('button');
+   const wrap = document.querySelector('.wrapper');
+   btnElem.className = 'btn'
+   btnElem.textContent = 'Click';
+   wrap.append(btnElem);
+}
 
-const checkButtonStatus = () => {
-   return new Promise((resolve, reject) => {
-      const allButtonsPressed = [...btns].every(btn => btn.classList.contains('shadow'));
-      const oddButtonsPressed = [...btns].every((btn, index) => index % 2 === 0 ? btn.classList.contains('shadow') : true);
-      const evenButtonsPressed = [...btns].every((btn, index) => index % 2 !== 0 ? btn.classList.contains('shadow') : true);
+const buttonsElements = [...document.querySelectorAll('.btn')];
 
-      if (allButtonsPressed) {
-         resolve('Всі кнопки натиснуті');
-      } else if (oddButtonsPressed) {
-         resolve('Натиснуті всі непарні кнопки');
-      } else if (evenButtonsPressed) {
-         resolve('Натиснуті всі парні кнопки');
-      } else {
-         reject('Ще не всі кнопки натиснуті');
+const buttonsPromisses = buttonsElements.map(
+   btnElem => new Promise((resolve, reject) => {
+      btnElem.onclick = () => resolve(btnElem.classList.add(shadow));
+   }))
+
+Promise.all(buttonsPromisses.filter((_, index) => index % 2 !== 0))
+.then(() => {
+   alert('Всі непарні кнопки натиснуті!');
+ });
+
+ Promise.all(buttonsPromisses.filter((_, index) => index % 2 === 0))
+ .then(() => {
+   alert('Всі парні кнопки натиснуті!');
+ });
+
+Promise.all(buttonsPromisses)
+   .then((answer) => {
+      if (answer) {
+         alert('Всі конпки натиснуті');
       }
-   });
-};
+   })
 
-btns.forEach(button => {
-   button.addEventListener('click', () => {
-      toggleShadow(button)
-         .then(() => checkButtonStatus())
-         .then((message) => {
-            console.log(message);
-         })
-         .catch(error => console.error(error));
-   });
-});
