@@ -7,6 +7,10 @@
    display: flex;
    align-items: center;
    justify-content: center;
+   @media (max-width: 767.98px) {
+      flex-direction: column;
+      gap: 20px;
+   }
 }
 
 .btn {
@@ -20,6 +24,7 @@
    color: #fff;
    letter-spacing: 1.2px;
 }
+
 
 .shadow {
    box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.8);
