@@ -1,5 +1,5 @@
 const buttonCount = 5;
-const timeout = 5000;
+const timeout = 1000;
 const shadow = 'shadow'
 
 for (let i = 1; i <= buttonCount; i++) {
@@ -17,12 +17,12 @@ const buttonsPromisses = buttonsElements.map(
       btnElem.onclick = () => resolve(btnElem.classList.add(shadow));
    }))
 
-Promise.all(buttonsPromisses.filter((_, index) => index % 2 !== 0))
+Promise.all(buttonsPromisses.filter((_, index) => index % 2 === 0))
 .then(() => {
    alert('Всі непарні кнопки натиснуті!');
  });
 
- Promise.all(buttonsPromisses.filter((_, index) => index % 2 === 0))
+ Promise.all(buttonsPromisses.filter((_, index) => index % 2 !== 0))
  .then(() => {
    alert('Всі парні кнопки натиснуті!');
  });
@@ -30,7 +30,9 @@ Promise.all(buttonsPromisses.filter((_, index) => index % 2 !== 0))
 Promise.all(buttonsPromisses)
    .then((answer) => {
       if (answer) {
-         alert('Всі конпки натиснуті');
-      }
+         setTimeout(() => {
+           alert('Всі кнопки натиснуті!');
+         }, timeout);
+       }
    })
 
